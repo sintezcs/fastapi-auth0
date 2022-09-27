@@ -77,7 +77,7 @@ class JwksDict(TypedDict):
 class Auth0:
     def __init__(self, domain: str, api_audience: str, scopes: Dict[str, str]={},
             auto_error: bool=True, scope_auto_error: bool=True, email_auto_error: bool=False,
-            auth0user_model: Type[Auth0User]=Auth0User):
+            auth0user_model: Type[Auth0User]=Auth0User, jwks_file: Optional[str]=None):
         self.domain = domain
         self.audience = api_audience
 
@@ -88,8 +88,14 @@ class Auth0:
         self.auth0_user_model = auth0user_model
 
         self.algorithms = ['RS256']
-        r = urllib.request.urlopen(f'https://{domain}/.well-known/jwks.json')
-        self.jwks: JwksDict = json.loads(r.read())
+
+        # You may want to pass a dummy local JWKS file for testing purposes
+        if jwks_file:
+            with open(jwks_file) as f:
+                self.jwks = json.load(f)
+        else:
+            r = urllib.request.urlopen(f'https://{domain}/.well-known/jwks.json')
+            self.jwks: JwksDict = json.loads(r.read())
 
         authorization_url_qs = urllib.parse.urlencode({'audience': api_audience})
         authorization_url = f'https://{domain}/authorize?{authorization_url_qs}'

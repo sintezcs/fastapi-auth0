@@ -1,0 +1,28 @@
+{
+  "keys": [
+    {
+      "alg": "RS256",
+      "kty": "RSA",
+      "use": "sig",
+      "n": "test",
+      "e": "AQAB",
+      "kid": "AAAAAAAA",
+      "x5t": "AAAAAAAA",
+      "x5c": [
+        "test"
+      ]
+    },
+    {
+      "alg": "RS256",
+      "kty": "RSA",
+      "use": "sig",
+      "n": "test2",
+      "e": "AQAB",
+      "kid": "BBBBBBBB",
+      "x5t": "BBBBBBBB",
+      "x5c": [
+        "test2"
+      ]
+    }
+  ]
+}
